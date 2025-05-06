@@ -3,14 +3,14 @@ package com.bankapp.business.concretes;
 import com.bankapp.business.abstracts.CustomerService;
 import com.bankapp.business.constants.Messages;
 import com.bankapp.business.dtos.responses.CustomerResponse;
-import com.bankapp.repositories.BaseCustomerRepository;
+import com.bankapp.repositories.abstracts.CustomerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public abstract class CustomerManager<T extends CustomerResponse> implements CustomerService<T> {
-    protected final BaseCustomerRepository<T> customerRepository;
+    protected final CustomerRepository<T> customerRepository;
 
     @Override
     public T formatResponse(T response) {
