@@ -2,6 +2,7 @@ package com.bankapp.business.rules;
 
 import com.bankapp.business.constants.Messages;
 import com.bankapp.business.dtos.requests.IndividualCustomerCreateRequest;
+import com.bankapp.core.crosscuttingconcerns.exceptions.types.BusinessException;
 import com.bankapp.entities.model.IndividualCustomer;
 import com.bankapp.repositories.IndividualCustomerRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,19 +15,28 @@ public class IndividualCustomerBusinessRules {
 
     public void checkIfIndividualCustomerExists(Long id) {
         if (!individualCustomerRepository.existsById(id)) {
-            throw new RuntimeException(String.format(Messages.INDIVIDUAL_CUSTOMER_NOT_FOUND, id));
+            throw new BusinessException(
+                String.format(Messages.INDIVIDUAL_CUSTOMER_NOT_FOUND, id),
+                "INDIVIDUAL_CUSTOMER_NOT_FOUND"
+            );
         }
     }
 
     public void checkIfIdentityNumberExists(String identityNumber) {
         if (individualCustomerRepository.existsByIdentityNumber(identityNumber)) {
-            throw new RuntimeException(String.format(Messages.INDIVIDUAL_CUSTOMER_ALREADY_EXISTS, identityNumber));
+            throw new BusinessException(
+                String.format(Messages.INDIVIDUAL_CUSTOMER_ALREADY_EXISTS, identityNumber),
+                "INDIVIDUAL_CUSTOMER_ALREADY_EXISTS"
+            );
         }
     }
 
     public void checkIfEmailExists(String email) {
         if (individualCustomerRepository.existsByEmail(email)) {
-            throw new RuntimeException(String.format(Messages.EMAIL_ALREADY_EXISTS, email));
+            throw new BusinessException(
+                String.format(Messages.EMAIL_ALREADY_EXISTS, email),
+                "EMAIL_ALREADY_EXISTS"
+            );
         }
     }
 
@@ -38,7 +48,10 @@ public class IndividualCustomerBusinessRules {
 
     public void validateIndividualCustomer(IndividualCustomer customer) {
         if (customer == null) {
-            throw new RuntimeException(Messages.INDIVIDUAL_CUSTOMER_NOT_FOUND);
+            throw new BusinessException(
+                Messages.INDIVIDUAL_CUSTOMER_NOT_FOUND,
+                "INDIVIDUAL_CUSTOMER_NOT_FOUND"
+            );
         }
         // Diğer validasyonlar buraya eklenebilir
     }
