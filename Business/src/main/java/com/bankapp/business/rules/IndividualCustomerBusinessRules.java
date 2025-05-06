@@ -5,55 +5,24 @@ import com.bankapp.business.dtos.requests.IndividualCustomerCreateRequest;
 import com.bankapp.core.crosscuttingconcerns.exceptions.types.BusinessException;
 import com.bankapp.entities.model.IndividualCustomer;
 import com.bankapp.repositories.IndividualCustomerRepository;
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class IndividualCustomerBusinessRules {
     private final IndividualCustomerRepository individualCustomerRepository;
 
-    public void checkIfIndividualCustomerExists(Long id) {
-        if (!individualCustomerRepository.existsById(id)) {
-            throw new BusinessException(
-                String.format(Messages.INDIVIDUAL_CUSTOMER_NOT_FOUND, id),
-                "INDIVIDUAL_CUSTOMER_NOT_FOUND"
-            );
-        }
-    }
-
-    public void checkIfIdentityNumberExists(String identityNumber) {
-        if (individualCustomerRepository.existsByIdentityNumber(identityNumber)) {
-            throw new BusinessException(
-                String.format(Messages.INDIVIDUAL_CUSTOMER_ALREADY_EXISTS, identityNumber),
-                "INDIVIDUAL_CUSTOMER_ALREADY_EXISTS"
-            );
+    public void checkIfNationalIdExists(String nationalId) {
+        if (individualCustomerRepository.existsByNationalId(nationalId)) {
+            throw new BusinessException(Messages.Customer.INDIVIDUAL_CUSTOMER_ALREADY_EXISTS);
         }
     }
 
     public void checkIfEmailExists(String email) {
         if (individualCustomerRepository.existsByEmail(email)) {
-            throw new BusinessException(
-                String.format(Messages.EMAIL_ALREADY_EXISTS, email),
-                "EMAIL_ALREADY_EXISTS"
-            );
+            throw new BusinessException(Messages.Customer.EMAIL_ALREADY_EXISTS);
         }
-    }
-
-    public void validateIndividualCustomer(IndividualCustomerCreateRequest request) {
-        checkIfIdentityNumberExists(request.getIdentityNumber());
-        checkIfEmailExists(request.getEmail());
-        // Diğer validasyonlar buraya eklenebilir
-    }
-
-    public void validateIndividualCustomer(IndividualCustomer customer) {
-        if (customer == null) {
-            throw new BusinessException(
-                Messages.INDIVIDUAL_CUSTOMER_NOT_FOUND,
-                "INDIVIDUAL_CUSTOMER_NOT_FOUND"
-            );
-        }
-        // Diğer validasyonlar buraya eklenebilir
     }
 
     public boolean isValidEmail(String email) {

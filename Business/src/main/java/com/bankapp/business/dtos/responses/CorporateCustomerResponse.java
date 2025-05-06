@@ -4,18 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CorporateCustomerResponse {
-    private Long id;
+@EqualsAndHashCode(callSuper = true)
+public class CorporateCustomerResponse extends CustomerResponse {
+
     private String companyName;
     private String taxNumber;
-    private String email;
-    private String phoneNumber;
-    private String address;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    private String tradeRegisterNumber;
+    private String contactPerson;
 } 

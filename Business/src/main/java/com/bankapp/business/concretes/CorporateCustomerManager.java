@@ -22,29 +22,22 @@ public class CorporateCustomerManager implements CorporateCustomerService {
 
     @Override
     public CorporateCustomerResponse create(CorporateCustomerCreateRequest request) {
-        corporateCustomerBusinessRules.validateCorporateCustomer(request);
-        CorporateCustomer customer = corporateCustomerMapper.mapToCorporateCustomer(request);
-        CorporateCustomer savedCustomer = corporateCustomerRepository.save(customer);
-        return corporateCustomerMapper.mapToCorporateCustomerResponse(savedCustomer);
-    }
-
-    @Override
-    public CorporateCustomerResponse getById(Long id) {
-        corporateCustomerBusinessRules.checkIfCorporateCustomerExists(id);
-        CorporateCustomer customer = corporateCustomerRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Corporate customer not found with id: " + id));
+        corporateCustomerBusinessRules.checkIfTaxNumberExists(request.getTaxNumber());
+        var customer = corporateCustomerMapper.mapToCorporateCustomer(request);
+        customer = corporateCustomerRepository.save(customer);
         return corporateCustomerMapper.mapToCorporateCustomerResponse(customer);
     }
 
+    @Override
+    public CorporateCustomerResponse getByCustomerNumber(String customerNumber) {
+        var customer = corporateCustomerRepository.findByCustomerNumber(customerNumber);
+        return corporateCustomerMapper.mapToCorporateCustomerResponse(customer);
+    }
 
     @Override
-    public void delete(Long id) {
-        corporateCustomerBusinessRules.checkIfCorporateCustomerExists(id);
-        corporateCustomerRepository.deleteById(id);
+    public CorporateCustomerResponse getByTaxNumber(String taxNumber) {
+        var customer = corporateCustomerRepository.findByTaxNumber(taxNumber);
+        return corporateCustomerMapper.mapToCorporateCustomerResponse(customer);
     }
-    
-    @Override
-    public CorporateCustomerResponse formatResponse(CorporateCustomerResponse response) {
-        return corporateCustomerBusinessRules.formatResponse(response);
-    }
+
 } 

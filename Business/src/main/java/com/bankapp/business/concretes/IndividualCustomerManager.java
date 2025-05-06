@@ -7,14 +7,13 @@ import com.bankapp.business.mappings.IndividualCustomerMapper;
 import com.bankapp.business.rules.IndividualCustomerBusinessRules;
 import com.bankapp.entities.model.IndividualCustomer;
 import com.bankapp.repositories.IndividualCustomerRepository;
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Service
-@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 public class IndividualCustomerManager implements IndividualCustomerService {
     private final IndividualCustomerRepository individualCustomerRepository;
     private final IndividualCustomerMapper individualCustomerMapper;
@@ -22,30 +21,22 @@ public class IndividualCustomerManager implements IndividualCustomerService {
 
     @Override
     public IndividualCustomerResponse create(IndividualCustomerCreateRequest request) {
-        individualCustomerBusinessRules.validateIndividualCustomer(request);
-        IndividualCustomer customer = individualCustomerMapper.mapToIndividualCustomer(request);
-        IndividualCustomer savedCustomer = individualCustomerRepository.save(customer);
-        return individualCustomerMapper.mapToIndividualCustomerResponse(savedCustomer);
+        individualCustomerBusinessRules.checkIfNationalIdExists(request.getNationalId());
+        var customer = individualCustomerMapper.mapToIndividualCustomer(request);
+        customer = individualCustomerRepository.save(customer);
+        return individualCustomerMapper.mapToIndividualCustomerResponse(customer);
     }
 
 
     @Override
-    public IndividualCustomerResponse getById(Long id) {
-        individualCustomerBusinessRules.checkIfIndividualCustomerExists(id);
-        IndividualCustomer customer = individualCustomerRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Individual customer not found with id: " + id));
+    public IndividualCustomerResponse getByCustomerNumber(String customerNumber) {
+        var customer = individualCustomerRepository.findByCustomerNumber(customerNumber);
         return individualCustomerMapper.mapToIndividualCustomerResponse(customer);
     }
 
     @Override
-    public void delete(Long id) {
-        individualCustomerBusinessRules.checkIfIndividualCustomerExists(id);
-        individualCustomerRepository.deleteById(id);
-    }
-
-
-    @Override
-    public IndividualCustomerResponse formatResponse(IndividualCustomerResponse response) {
-        return individualCustomerBusinessRules.formatResponse(response);
+    public IndividualCustomerResponse getByNationalId(String nationalId) {
+        var customer = individualCustomerRepository.findByNationalId(nationalId);
+        return individualCustomerMapper.mapToIndividualCustomerResponse(customer);
     }
 } 
