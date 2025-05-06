@@ -9,7 +9,8 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @Entity
-@DiscriminatorValue("INDIVIDUAL")
+@Table(name = "individual_customers")
+@PrimaryKeyJoinColumn(name = "customer_id")
 public class IndividualCustomer extends Customer {
 
     @Column(name = "first_name", nullable = false)
@@ -21,14 +22,6 @@ public class IndividualCustomer extends Customer {
     @Column(name = "national_id", unique = true, nullable = false)
     private String nationalId;
 
-    @Column(name = "birth_date", nullable = false)
+    @Column(name = "birth_date")
     private LocalDate birthDate;
-
-    @Column(name = "gender", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private Gender gender;
-
-    public enum Gender {
-        MALE, FEMALE, OTHER
-    }
 } 

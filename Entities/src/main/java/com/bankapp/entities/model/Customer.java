@@ -5,28 +5,22 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.io.Serializable;
-
 @Getter
 @Setter
 @Entity
 @Table(name = "customers")
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "customer_type", discriminatorType = DiscriminatorType.STRING)
-public abstract class Customer extends BaseEntity<Long> implements Serializable {
+@Inheritance(strategy = InheritanceType.JOINED)
+public abstract class Customer extends BaseEntity<Long> {
 
     @Column(name = "customer_number", unique = true, nullable = false)
     private String customerNumber;
 
-    @Column(name = "email", unique = true, nullable = false)
+    @Column(name = "email")
     private String email;
 
-    @Column(name = "phone_number", nullable = false)
+    @Column(name = "phone_number")
     private String phoneNumber;
 
-    @Column(name = "address", nullable = false)
+    @Column(name = "address")
     private String address;
-
-    @Column(name = "is_active", nullable = false)
-    private boolean isActive = true;
 } 
