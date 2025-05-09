@@ -3,10 +3,9 @@ package com.bankapp.business.dtos.requests;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 
 @Data
 @AllArgsConstructor
@@ -21,7 +20,7 @@ public class IndividualCustomerCreateRequest {
 
     @NotBlank
     @Pattern(regexp = "^[0-9]{11}$", message = "Identity number must be 11 digits")
-    private String identityNumber;
+    private String nationalId;
 
     private String birthDate;
 

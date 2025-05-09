@@ -4,6 +4,8 @@ public class Messages {
 
     public static class Customer {
 
+        public static final String CUSTOMER_NOT_FOUND = "Customer not found with id: %d";
+
         public static final String INDIVIDUAL_CUSTOMER_NOT_FOUND = "Individual customer not found with id: %d";
         public static final String INDIVIDUAL_CUSTOMER_ALREADY_EXISTS= "Identity number already exists: %s";
         public static final String INDIVIDUAL_CUSTOMER_CREATED = "Individual customer created successfully";

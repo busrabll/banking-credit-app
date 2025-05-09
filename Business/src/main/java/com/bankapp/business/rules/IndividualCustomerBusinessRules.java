@@ -1,17 +1,20 @@
 package com.bankapp.business.rules;
 
 import com.bankapp.business.constants.Messages;
-import com.bankapp.business.dtos.requests.IndividualCustomerCreateRequest;
 import com.bankapp.core.crosscuttingconcerns.exceptions.types.BusinessException;
-import com.bankapp.entities.model.IndividualCustomer;
-import com.bankapp.repositories.IndividualCustomerRepository;
+import com.bankapp.repositories.abstracts.IndividualCustomerRepository;
+
 import lombok.AllArgsConstructor;
+
 import org.springframework.stereotype.Service;
+
+
 
 @Service
 @AllArgsConstructor
 public class IndividualCustomerBusinessRules {
-    private final IndividualCustomerRepository individualCustomerRepository;
+
+    private IndividualCustomerRepository individualCustomerRepository;
 
     public void checkIfNationalIdExists(String nationalId) {
         if (individualCustomerRepository.existsByNationalId(nationalId)) {

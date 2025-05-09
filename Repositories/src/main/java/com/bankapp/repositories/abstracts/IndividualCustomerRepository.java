@@ -8,5 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface IndividualCustomerRepository extends CustomerRepository<IndividualCustomer> {
 
     boolean existsByNationalId(String nationalId);
+    boolean existsByEmail(String email);
     IndividualCustomer findByNationalId(String nationalId);
 } 

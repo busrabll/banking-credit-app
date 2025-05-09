@@ -1,13 +1,11 @@
 package com.bankapp.entities.model;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import java.time.LocalDate;
 
-@Getter
-@Setter
+@Data
 @Entity
 @Table(name = "individual_customers")
 @PrimaryKeyJoinColumn(name = "customer_id")
