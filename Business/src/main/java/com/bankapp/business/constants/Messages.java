@@ -16,4 +16,14 @@ public class Messages {
         public static final String TAX_NUMBER_ALREADY_EXISTS = "Tax number already exists: %s";
         public static final String CORPORATE_CUSTOMER_CREATED = "Corporate customer created successfully";
     }
+
+    public static class Credit {
+
+        public static final String CREDIT_TYPE_NOT_FOUND = "Credit type not found with id: %d";
+        public static final String APPLICATION_NOT_FOUND = "Application not found with id: %d";
+        public static final String INVALID_CREDIT_TYPE_FOR_CUSTOMER = "Invalid credit type for customer";
+        public static final String AMOUNT_OUT_OF_RANGE = "Credit amount is out of allowed range";
+        public static final String TERM_OUT_OF_RANGE = "Credit term is out of allowed range";
+        public static final String APPLICATION_CANNOT_BE_CANCELLED = "Credit application cannot be cancelled";
+    }
 }
