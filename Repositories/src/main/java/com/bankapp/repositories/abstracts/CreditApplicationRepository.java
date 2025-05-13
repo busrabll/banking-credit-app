@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CreditApplicationRepository extends JpaRepository<CreditApplication, Long> {
-    Page<CreditApplication> findAllByCustomerId(Long customer, Pageable pageable);
+    Page<CreditApplication> findAllByCustomerId(Long customerId, Pageable pageable);
 } 

@@ -1,12 +1,7 @@
 package com.bankapp.business.concretes;
 
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -15,9 +10,7 @@ import com.bankapp.business.dtos.requests.CreditApplicationCreateRequest;
 import com.bankapp.business.dtos.responses.CreditApplicationResponse;
 import com.bankapp.business.rules.CreditApplicationBusinessRules;
 import com.bankapp.business.mappings.CreditApplicationMapper;
-import com.bankapp.core.crosscuttingconcerns.exceptions.types.BusinessException;
 import com.bankapp.core.utilities.results.PaginatedDataResponse;
-import com.bankapp.entities.enums.CreditApplicationStatus;
 import com.bankapp.entities.model.CreditApplication;
 import com.bankapp.entities.model.CreditType;
 import com.bankapp.entities.model.Customer;
@@ -75,17 +68,17 @@ public class CreditApplicationManager implements CreditApplicationService {
     }
 
     @Override
-    public PaginatedDataResponse<CreditApplicationResponse> getAllByCustomerId(Long customerId, Pageable pageable){
+    public PaginatedDataResponse<CreditApplicationResponse> getAllByCustomerId(Long customerId, Pageable pageable) {
         rules.checkIfCustomerExists(customerId);
 
-        Page<CreditApplicationResponse> applicationPage = creditApplicationRepository.findAllByCustomer();
+        Page<CreditApplication> applicationPage = creditApplicationRepository.findAllByCustomerId(customerId, pageable);
 
         List<CreditApplicationResponse> responses = applicationPage.getContent()
-            .stream()
-            .map(mapper::mapToResponse)
-            .toList();
+                .stream()
+                .map(mapper::mapToResponse)
+                .toList();
 
-            return new PaginatedDataResponse<>(
+        return new PaginatedDataResponse<>(
                 responses,
                 applicationPage.getNumber(),
                 applicationPage.getSize(),
@@ -94,9 +87,7 @@ public class CreditApplicationManager implements CreditApplicationService {
                 applicationPage.hasNext(),
                 applicationPage.hasPrevious(),
                 applicationPage.isFirst(),
-                applicationPage.isLast()
-            );
-
+                applicationPage.isLast());
     }
 
     @Override
@@ -107,7 +98,7 @@ public class CreditApplicationManager implements CreditApplicationService {
 
         rules.checkIfApplicatonCanBeCancelled(application);
 
-        //application.setStatus(CreditApplicationStatus.CANCELLED);
+        // application.setStatus(CreditApplicationStatus.CANCELLED);
         application = creditApplicationRepository.save(application);
 
         return mapper.mapToResponse(application);

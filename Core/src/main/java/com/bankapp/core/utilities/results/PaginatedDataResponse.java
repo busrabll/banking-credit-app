@@ -14,7 +14,7 @@ public class PaginatedDataResponse<T> {
     private int pageNumber;
     private int pageSize;
     private int totalPages;
-    private int totalItems;
+    private Long totalItems;
     private boolean hasNextPage;
     private boolean hasPreviousPage;
     private boolean isFirstPage;

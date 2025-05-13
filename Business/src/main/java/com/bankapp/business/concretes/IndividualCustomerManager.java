@@ -40,25 +40,30 @@ public class IndividualCustomerManager implements IndividualCustomerService {
     }
 
     @Override
+    public IndividualCustomerResponse getByCustomerNumber(String customerNumber) {
+        IndividualCustomer customer = individualCustomerRepository.findByCustomerNumber(customerNumber);
+        return individualCustomerMapper.mapToIndividualCustomerResponse(customer);
+    }
+
+    @Override
     public PaginatedDataResponse<IndividualCustomerResponse> getAllPaged(Pageable pageable) {
 
         Page<IndividualCustomer> customerPage = individualCustomerRepository.findAll(pageable);
 
         List<IndividualCustomerResponse> responses = customerPage.getContent()
-            .stream()
-            .map(individualCustomerMapper::mapToIndividualCustomerResponse)
-            .toList();
-        
-        return new PaginatedDataResponse<>(
-            responses,
-            customerPage.getNumber(),
-            customerPage.getSize(),
-            customerPage.getTotalPages(),
-            customerPage.getTotalElements(),
-            customerPage.hasNext(),
-            customerPage.hasPrevious(),
-            customerPage.isFirst(),
-            customerPage.isLast()
-        );
+                .stream()
+                .map(individualCustomerMapper::mapToIndividualCustomerResponse)
+                .toList();
+
+        return new PaginatedDataResponse<IndividualCustomerResponse>(
+                responses,
+                customerPage.getNumber(),
+                customerPage.getSize(),
+                customerPage.getTotalPages(),
+                customerPage.getTotalElements(),
+                customerPage.hasNext(),
+                customerPage.hasPrevious(),
+                customerPage.isFirst(),
+                customerPage.isLast());
     }
-} 
+}

@@ -9,4 +9,5 @@ public interface IndividualCustomerRepository extends JpaRepository<IndividualCu
     boolean existsByNationalId(String nationalId);
     boolean existsByEmail(String email);
     IndividualCustomer findByNationalId(String nationalId);
+    IndividualCustomer findByCustomerNumber(String customerNumber);
 } 
