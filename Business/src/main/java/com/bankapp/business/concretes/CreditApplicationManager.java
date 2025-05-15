@@ -27,7 +27,7 @@ public class CreditApplicationManager implements CreditApplicationService {
 
     private CreditApplicationRepository creditApplicationRepository;
     private CustomerRepository<Customer> customerRepository;
-    private CreditTypeRepository creditTypeRepository;
+    private CreditTypeRepository<CreditType> creditTypeRepository;
     private CreditApplicationMapper mapper;
     private CreditApplicationBusinessRules rules;
 

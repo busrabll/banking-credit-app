@@ -21,7 +21,7 @@ import lombok.AllArgsConstructor;
 public class CreditApplicationBusinessRules {
 
     private CustomerRepository<Customer> customerRepository;
-    private CreditTypeRepository creditTypeRepository;
+    private CreditTypeRepository<CreditType> creditTypeRepository;
     private CreditApplicationRepository creditApplicationRepository;
 
     public void checkIfCustomerExists(Long customerId) {

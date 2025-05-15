@@ -1,0 +1,19 @@
+# Eclipse
+.classpath
+.project
+.settings/
+
+# VS Code
+.vscode/
+
+# Maven
+/target/
+*.log
+
+# IntelliJ
+.idea/
+*.iml
+
+# Sistem dosyaları
+.DS_Store
+Thumbs.db
