@@ -1,5 +1,7 @@
 package com.bankapp.business.dtos.requests;
 
+import java.time.LocalDate;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -20,7 +22,7 @@ public class IndividualCustomerCreateRequest {
     @Pattern(regexp = "^[0-9]{11}$", message = "Identity number must be 11 digits")
     private String nationalId;
 
-    private String birthDate;
+    private LocalDate birthDate;
 
     @Pattern(regexp = "^[0-9]{10}$", message = "Phone number must be 10 digits")
     private String phoneNumber;

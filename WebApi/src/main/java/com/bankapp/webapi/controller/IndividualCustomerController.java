@@ -26,7 +26,7 @@ public class IndividualCustomerController {
 
     private IndividualCustomerService individualCustomerService;
 
-    @PostMapping
+    @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Create new individual customer")
     public IndividualCustomerResponse create(@RequestBody IndividualCustomerCreateRequest request) {

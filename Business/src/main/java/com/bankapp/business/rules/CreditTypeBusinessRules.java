@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 
 import com.bankapp.business.constants.Messages;
 import com.bankapp.core.crosscuttingconcerns.exceptions.types.BusinessException;
+import com.bankapp.entities.model.CreditType;
 import com.bankapp.repositories.abstracts.CreditTypeRepository;
 
 import lombok.AllArgsConstructor;
@@ -12,7 +13,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class CreditTypeBusinessRules {
 
-	private CreditTypeRepository<?> repository;
+	private CreditTypeRepository<CreditType> repository;
 
 	public void checkIfExists(Long id) {
 		if (!repository.existsById(id)) {
