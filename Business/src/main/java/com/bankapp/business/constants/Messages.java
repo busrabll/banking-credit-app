@@ -27,4 +27,10 @@ public class Messages {
         public static final String TERM_OUT_OF_RANGE = "Credit term is out of allowed range";
         public static final String APPLICATION_CANNOT_BE_CANCELLED = "Credit application cannot be cancelled";
     }
+    
+    public static class User {
+    	
+    	public static final String USERNAME_ALREADY_EXISTS = "User name already exists";
+    	
+    }
 }
