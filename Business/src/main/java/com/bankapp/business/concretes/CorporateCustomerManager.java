@@ -3,11 +3,18 @@ package com.bankapp.business.concretes;
 import com.bankapp.business.abstracts.CorporateCustomerService;
 import com.bankapp.business.dtos.requests.CorporateCustomerCreateRequest;
 import com.bankapp.business.dtos.responses.CorporateCustomerResponse;
+import com.bankapp.business.dtos.responses.IndividualCustomerResponse;
 import com.bankapp.business.mappings.CorporateCustomerMapper;
 import com.bankapp.business.rules.CorporateCustomerBusinessRules;
+import com.bankapp.core.utilities.results.PaginatedDataResponse;
 import com.bankapp.entities.model.CorporateCustomer;
+import com.bankapp.entities.model.IndividualCustomer;
 import com.bankapp.repositories.abstracts.CorporateCustomerRepository;
 
+import java.util.List;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import lombok.AllArgsConstructor;
@@ -39,6 +46,29 @@ public class CorporateCustomerManager implements CorporateCustomerService {
     public CorporateCustomerResponse getByTaxNumber(String taxNumber) {
         var customer = corporateCustomerRepository.findByTaxNumber(taxNumber);
         return corporateCustomerMapper.mapToCorporateCustomerResponse(customer);
+    }
+
+
+	@Override
+    public PaginatedDataResponse<CorporateCustomerResponse> getAllPaged(Pageable pageable) {
+
+        Page<CorporateCustomer> customerPage = corporateCustomerRepository.findAll(pageable);
+
+        List<CorporateCustomerResponse> responses = customerPage.getContent()
+                .stream()
+                .map(corporateCustomerMapper::mapToCorporateCustomerResponse)
+                .toList();
+
+        return new PaginatedDataResponse<CorporateCustomerResponse>(
+                responses,
+                customerPage.getNumber(),
+                customerPage.getSize(),
+                customerPage.getTotalPages(),
+                customerPage.getTotalElements(),
+                customerPage.hasNext(),
+                customerPage.hasPrevious(),
+                customerPage.isFirst(),
+                customerPage.isLast());
     }
 
 } 
